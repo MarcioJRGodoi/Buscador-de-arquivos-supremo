@@ -37,7 +37,7 @@ public class BuscaComUmaThread implements Busca {
                     long endTime = System.currentTimeMillis();
                     long elapsedTime = endTime - startTime;
                     SwingUtilities.invokeLater(() -> {
-                        textArea.append("Tempo de execução: " + elapsedTime + "ms\n");
+                        textArea.append("Tempo de execução para o arquivo: " + file.getName() +" " + elapsedTime + "ms\n");
                     });
                 });
                 thread.start();
