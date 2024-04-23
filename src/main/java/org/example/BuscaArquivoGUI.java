@@ -31,28 +31,43 @@ public class BuscaArquivoGUI {
 
     private void initialize() {
         frame = new JFrame();
-        frame.setBounds(100, 100, 450, 300);
+        frame.setBounds(100, 100, 850, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout(0, 0));
 
         JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         frame.getContentPane().add(panel, BorderLayout.NORTH);
 
+        JScrollPane scrollPane = new JScrollPane();
+        frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+        textArea = new JTextArea();
+        scrollPane.setViewportView(textArea);
+
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panel.add(inputPanel);
+
         JLabel lblNewLabel = new JLabel("Nome para busca:");
-        panel.add(lblNewLabel);
+        inputPanel.add(lblNewLabel);
 
         textField = new JTextField();
-        panel.add(textField);
-        textField.setColumns(10);
+        textField.setPreferredSize(new Dimension(100, 20)); // Reduzindo a largura do campo de texto
+        inputPanel.add(textField);
 
         comboBox = new JComboBox<>();
         comboBox.addItem(new BuscaTradicional(textArea));
-        comboBox.addItem(new BuscaComThreads());
-        panel.add(comboBox);
-
+        comboBox.addItem(new BuscaComUmaThread(textArea));
+        inputPanel.add(comboBox);
+        frame.setLocationRelativeTo(null);
         JButton btnNewButton = new JButton("Selecionar Arquivos");
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Limpar a tela antes de cada busca
+                textArea.setText("");
+
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setMultiSelectionEnabled(true);
                 int returnValue = fileChooser.showOpenDialog(null);
@@ -63,12 +78,6 @@ public class BuscaArquivoGUI {
                 }
             }
         });
-        panel.add(btnNewButton);
-
-        JScrollPane scrollPane = new JScrollPane();
-        frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
-
-        textArea = new JTextArea();
-        scrollPane.setViewportView(textArea);
+        inputPanel.add(btnNewButton);
     }
 }
