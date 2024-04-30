@@ -61,6 +61,9 @@ public class BuscaArquivoGUI {
         comboBox.addItem(new BuscaTradicional(textArea));
         comboBox.addItem(new BuscaComUmaThread(textArea));
         comboBox.addItem(new BuscaComDuasThreads(textArea));
+        //comboBox.addItem(new BuscaComArvore(textArea));//BuscaComArvore Perigoso ISSO KKKKKKKK
+        comboBox.addItem(new BuscaHashSemThread(textArea));//BuscaHashSemThread
+        comboBox.addItem(new BuscaComTrie(textArea));//BuscaComTrie
         inputPanel.add(comboBox);
         frame.setLocationRelativeTo(null);
         JButton btnNewButton = new JButton("Selecionar Arquivos");

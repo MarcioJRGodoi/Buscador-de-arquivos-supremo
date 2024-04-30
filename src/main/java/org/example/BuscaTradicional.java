@@ -25,8 +25,9 @@ public class BuscaTradicional implements Busca{
                         lineNumber++;
                         if (line.contains(nome)) {
                             int finalLineNumber = lineNumber;
+                            String finalLine = line;
                             SwingUtilities.invokeLater(() -> {
-                                textArea.append("Arquivo: " + file.getName() + ", Linha: " + finalLineNumber + "\n");
+                                textArea.append("Arquivo: " + file.getName() + "Nome: " + finalLine + ", Linha: " + finalLineNumber + "\n");
                             });
                         }
                     }
