@@ -17,6 +17,7 @@ public class BuscaComUmaThread implements Busca {
     public void buscarNome(File[] files, String nome) {
         for (File file : files) {
             if (file.isFile() && file.getName().endsWith(".txt")) {
+                // Cria uma nova thread para realizar a busca no arquivo
                 Thread thread = new Thread(() -> {
                     long startTime = System.currentTimeMillis();
                     try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -25,9 +26,10 @@ public class BuscaComUmaThread implements Busca {
                         while ((line = br.readLine()) != null) {
                             lineNumber++;
                             if (line.contains(nome)) {
+                                String finalLine = line;
                                 int finalLineNumber = lineNumber;
                                 SwingUtilities.invokeLater(() -> {
-                                    textArea.append("Arquivo: " + file.getName() + ", Linha: " + finalLineNumber + "\n");
+                                    textArea.append("Arquivo: " + file.getName() + "Nome: " + finalLine + ", Linha: " + finalLineNumber + "\n");
                                 });
                             }
                         }
@@ -40,6 +42,7 @@ public class BuscaComUmaThread implements Busca {
                         textArea.append("Tempo de execução para o arquivo: " + file.getName() +" " + elapsedTime + "ms\n");
                     });
                 });
+                // Inicia a thread
                 thread.start();
             }
         }
