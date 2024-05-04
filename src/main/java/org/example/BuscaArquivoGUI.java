@@ -44,6 +44,8 @@ public class BuscaArquivoGUI {
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
         textArea = new JTextArea();
+        textArea.setLineWrap(true);
+    textArea.setWrapStyleWord(true);
         scrollPane.setViewportView(textArea);
 
         JPanel inputPanel = new JPanel();
@@ -64,6 +66,8 @@ public class BuscaArquivoGUI {
         //comboBox.addItem(new BuscaComArvore(textArea));//BuscaComArvore Perigoso ISSO KKKKKKKK
         comboBox.addItem(new BuscaHashSemThread(textArea));//BuscaHashSemThread
         comboBox.addItem(new BuscaComTrie(textArea));//BuscaComTrie
+        comboBox.addItem(new BuscaThreadExplorador(textArea));
+
         inputPanel.add(comboBox);
         frame.setLocationRelativeTo(null);
         JButton btnNewButton = new JButton("Selecionar Arquivos");
