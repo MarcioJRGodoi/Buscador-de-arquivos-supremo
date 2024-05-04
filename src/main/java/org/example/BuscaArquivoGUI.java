@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FilenameFilter;
 
 public class BuscaArquivoGUI {
     private JFrame frame;
@@ -45,7 +46,7 @@ public class BuscaArquivoGUI {
 
         textArea = new JTextArea();
         textArea.setLineWrap(true);
-    textArea.setWrapStyleWord(true);
+        textArea.setWrapStyleWord(true);
         scrollPane.setViewportView(textArea);
 
         JPanel inputPanel = new JPanel();
@@ -63,9 +64,10 @@ public class BuscaArquivoGUI {
         comboBox.addItem(new BuscaTradicional(textArea));
         comboBox.addItem(new BuscaComUmaThread(textArea));
         comboBox.addItem(new BuscaComDuasThreads(textArea));
-        //comboBox.addItem(new BuscaComArvore(textArea));//BuscaComArvore Perigoso ISSO KKKKKKKK
-        comboBox.addItem(new BuscaHashSemThread(textArea));//BuscaHashSemThread
-        comboBox.addItem(new BuscaComTrie(textArea));//BuscaComTrie
+        // comboBox.addItem(new BuscaComArvore(textArea));//BuscaComArvore Perigoso ISSO
+        // KKKKKKKK
+        comboBox.addItem(new BuscaHashSemThread(textArea));// BuscaHashSemThread
+        comboBox.addItem(new BuscaComTrie(textArea));// BuscaComTrie
         comboBox.addItem(new BuscaThreadExplorador(textArea));
         comboBox.addItem(new BuscaThreadTesouro(textArea));
 
@@ -78,14 +80,26 @@ public class BuscaArquivoGUI {
                 textArea.setText("");
 
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setMultiSelectionEnabled(true);
+                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 int returnValue = fileChooser.showOpenDialog(null);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    File[] files = fileChooser.getSelectedFiles();
-                    Busca busca = (Busca) comboBox.getSelectedItem();
-                    busca.buscarNome(files, textField.getText());
+                    File selectedFolder = fileChooser.getSelectedFile();
+                    if (selectedFolder != null && selectedFolder.isDirectory()) {
+                        File[] files = selectedFolder.listFiles(new FilenameFilter() {
+                            @Override
+                            public boolean accept(File dir, String name) {
+                                return name.toLowerCase().endsWith(".txt");
+                            }
+                        });
+
+                        Busca busca = (Busca) comboBox.getSelectedItem();
+                        busca.buscarNome(files, textField.getText());
+                    } else {
+                        System.out.println("Nenhum diretório selecionado.");
+                    }
                 }
             }
+
         });
         inputPanel.add(btnNewButton);
     }
