@@ -67,6 +67,7 @@ public class BuscaArquivoGUI {
         comboBox.addItem(new BuscaHashSemThread(textArea));//BuscaHashSemThread
         comboBox.addItem(new BuscaComTrie(textArea));//BuscaComTrie
         comboBox.addItem(new BuscaThreadExplorador(textArea));
+        comboBox.addItem(new BuscaThreadTesouro(textArea));
 
         inputPanel.add(comboBox);
         frame.setLocationRelativeTo(null);
