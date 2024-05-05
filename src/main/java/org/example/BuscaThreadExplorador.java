@@ -45,9 +45,9 @@ public class BuscaThreadExplorador implements Busca {
                 int tamanhoTexto = texto.length();
                 int tamanhoPalavra = palavraObjetivo.length();
 
-                long startTime = System.currentTimeMillis(); // Iniciar contagem de tempo
+                long startTime = System.currentTimeMillis();
 
-                StringBuilder path = new StringBuilder(); // Caminho percorrido
+                StringBuilder path = new StringBuilder();
 
                 while (true) {
                     int startPos = random.nextInt(Math.max(1, tamanhoTexto - tamanhoPalavra));
@@ -64,15 +64,14 @@ public class BuscaThreadExplorador implements Busca {
                             found = false;
                             break;
                         }
-                        // Adicionar ao caminho percorrido
                         switch (direction) {
                             case 0:
                                 currentPosition++;
-                                direcao = "Direita";
+                                direcao = "Cima";
                                 break;
                             case 1:
                                 currentPosition--;
-                                direcao = "Esquerda";
+                                direcao = "Baixo";
                                 break;
                             case 2:
                                 currentPosition -= 1;
@@ -101,7 +100,6 @@ public class BuscaThreadExplorador implements Busca {
                         message += "\nCaminho percorrido: " + path.toString();
                         textArea.append(message + "\n");
 
-                        // Calcular e exibir o tempo de execução
                         long endTime = System.currentTimeMillis();
                         long executionTime = endTime - startTime;
                         String timeMessage = "Tempo de execução: " + executionTime + " ms";

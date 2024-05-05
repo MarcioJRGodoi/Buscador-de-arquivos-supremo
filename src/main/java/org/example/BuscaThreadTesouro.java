@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -66,13 +65,15 @@ public class BuscaThreadTesouro implements Busca {
             if (palavraEncontrada) {
                 textArea.append("Começando busca pelo Tesouro no Arquivo: " + arquivo.getName() + "\n\n");
 
+                long startTime = System.currentTimeMillis();
+
                 ArrayList<String> palavrasOriginais = extrairPalavras(arquivo);
-                ArrayList<String> palavras = new ArrayList<>(palavrasOriginais); // Cópia das palavras originais
-                int indexInicial = palavras.size() / 2; // Começa na palavra do meio
+                ArrayList<String> palavras = new ArrayList<>(palavrasOriginais); 
+                int indexInicial = palavras.size() / 2;
                 int indexAtual = indexInicial;
-                int deslocamento = indexAtual; // Inicializa o deslocamento
-                boolean buscarDireita = true; // Inicia buscando para a direita
-                double porcentagem = 0.0; // Inicializa a porcentagem de proximidade
+                int deslocamento = indexAtual;
+                boolean buscarDireita = true;
+                double porcentagem = 0.0;
 
                 while (true) {
                     palavraEncontradaIndex = palavras.indexOf(palavraDesejada);
@@ -90,7 +91,13 @@ public class BuscaThreadTesouro implements Busca {
                     if (palavraAtual.equals(palavraDesejada)) {
                         textArea.append("\nPalavra '" + palavraDesejada + "' encontrada na posição: " + (deslocamento) + "\n");
                         textArea.setCaretPosition(textArea.getDocument().getLength());
-                        break; // Achou a palavra, então sai do loop
+
+                        long endTime = System.currentTimeMillis();
+                        long executionTime = endTime - startTime;
+
+                        String timeMessage = "Tempo de execução: " + executionTime + " ms";
+                        textArea.append(timeMessage + "\n");
+                        break;
                     } else {
                         buscarDireita = verificarDirecao(indexAtual, palavraEncontradaIndex);
 
@@ -132,7 +139,7 @@ public class BuscaThreadTesouro implements Busca {
         private double calcularPorcentagemDistancia(int indexAtual, int indexDesejado, int tamanhoOriginal) {
             double distancia = Math.abs(indexAtual - indexDesejado);
             double porcentagem = 100.0 - (distancia / tamanhoOriginal) * 100.0;
-            return Math.round(porcentagem * 100.0) / 100.0; // Arredonda para duas casas decimais
+            return Math.round(porcentagem * 100.0) / 100.0; 
         }
 
         public static boolean verificarDirecao(int indexAtual, int indexDesejado) {
